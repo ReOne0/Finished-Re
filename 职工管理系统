@@ -1,5 +1,6 @@
 struct LianXiRen
 {
+        string text;
 	string m_name;
 	int m_sex;
 	int m_age;
