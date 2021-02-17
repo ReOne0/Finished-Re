@@ -1,0 +1,293 @@
+struct LianXiRen
+{
+	string m_name;
+	int m_sex;
+	int m_age;
+	string m_iphone;
+	string m_location;
+};
+struct AddressBooks
+{
+	int m_size;
+	struct LianXiRen lianXiArr[max];
+};
+void showMenu()
+{
+	cout << "****************" << endl;
+	cout << "**1.添加联系人**" << endl;
+	cout << "**2.显示联系人**" << endl;
+	cout << "**3.删除联系人**" << endl;
+	cout << "**4.查找联系人**" << endl;
+	cout << "**5.修改联系人**" << endl;
+	cout << "**6.清空联系人**" << endl;
+	cout << "**0.退出联系人**" << endl;
+	cout << "****************" << endl;
+}
+void addPerson(AddressBooks* abs)//添加联系人
+{
+	if (abs->m_size==max)
+	{
+		cout << "通讯录已经满了" << endl;
+	}
+	else
+	{
+		string name;
+		cout << "请输入姓名" << endl;
+		cin >> name;
+		abs->lianXiArr[abs->m_size].m_name = name;
+		cout << "输入性别" << endl;
+		cout << "1.男 2.女" << endl;
+		int sex = 0;
+		while (true)
+		{
+			cin >> sex;
+			if (sex==1||sex==2)
+			{
+				abs->lianXiArr[abs->m_size].m_sex = sex;
+				break;
+			}
+			cout << "输入有误" << endl;
+		}
+		cout << "请输入年龄" << endl;
+		int age = 0;
+		while (true)
+		{
+			cin >> age;
+			if (age > 0 && age < 120)
+			{
+				abs->lianXiArr[abs->m_size].m_age = age;
+				break;
+			}
+			cout << "输入有误，重新输入" << endl;
+		}
+		cout << "请输入电话" << endl;
+		string phone;
+		cin >> phone;
+		abs->lianXiArr[abs->m_size].m_iphone = phone;
+		cout << "请输入地址" << endl;
+		string address;
+		cin >> address;
+		abs->lianXiArr[abs->m_size].m_location = address;
+		cout << abs->m_size;
+		abs->m_size++;
+		cout << abs->m_size;
+		cout << "添加成功" << endl;
+		system("pause");//请按任意键继续
+		system("cls");//清屏操作
+		
+	}
+}
+void showPerson(AddressBooks* abs)
+{
+	if (abs->m_size==0)
+	{
+		cout << "通讯录为空" << endl;
+	}
+	else
+	{
+		for (int i=0;i<abs->m_size;i++)
+		{
+			cout << "姓名：" << abs->lianXiArr[i].m_name << "\t";
+			cout << "性别 " << (abs->lianXiArr[i].m_sex==1 ? "男":"女") << "\t";
+			cout << abs->lianXiArr[i].m_age << "\t";
+			cout << abs->lianXiArr[i].m_iphone << "\t";
+			cout << abs->lianXiArr[i].m_location << endl;
+		}
+	}
+	system("pause");
+	system("cls");
+}
+int isExist( AddressBooks* abs, string name)//查找值
+{
+	//cout << abs->m_size << endl;
+	for (int i=0;i<abs->m_size;i++)
+	{
+		if (abs->lianXiArr[i].m_name==name)
+		{
+			return i;
+		}
+	}
+	return -1;
+}
+void deletePerson(AddressBooks* abs)
+{
+	cout << "请输入要删除的联系人" << endl;
+	string name;
+	cin >> name;
+	int indexde=isExist(abs, name);
+	if (indexde!=-1)
+	{
+		for (int i=indexde;i<abs->m_size;i++)
+		{
+			abs->lianXiArr[i] = abs->lianXiArr[i + 1];
+		}
+		abs->m_size--;
+		cout << "删除成功" << endl;
+	}
+	else
+	{
+		cout << "查无此人" << endl;
+	}
+	system("pause");
+	system("cls");
+}
+void findPerson(AddressBooks* abs)
+{
+	cout << "输入要查找的名字" << endl;
+	string name;
+	cin >> name;
+	int index = isExist(abs, name);
+	if (index!=-1)
+	{
+		cout << abs->lianXiArr[index].m_name << abs->lianXiArr[index].m_sex << abs->lianXiArr[index].m_age << abs->lianXiArr[index].m_iphone << abs->lianXiArr[index].m_location << endl;
+	}
+	else
+	{
+		cout << "查无此人" << endl;
+	}
+	system("pause");
+	system("cls");
+}
+void modifyPerson(AddressBooks* abs)
+{
+	cout << "请输入您要修改的联系人" << endl;
+	string name;
+	cin >> name;
+	int ret = isExist(abs, name);
+	if (ret!=-1)
+	{
+		string name;
+		cout << "是否修改姓名 0.否 1.是" << endl;
+		int gaibian = 0;
+		cin >> gaibian;
+		if (gaibian)
+		{
+			cout << "请输入姓名" << endl;
+			cin >> name;
+			abs->lianXiArr[ret].m_name = name;
+		}
+		cout << "是否修改性别 0.否 1.是" << endl;
+		cin >> gaibian;
+		if (gaibian)
+		{
+			cout << "请输入性别1.男;0.女" << endl;
+			int sex=0;
+			while (true)
+			{
+				cin >> sex;
+				if (sex==1||sex==0)
+				{
+					abs->lianXiArr[ret].m_sex = sex;
+					break;
+				}
+				cout << "输入有误" << endl;
+			}
+		}
+		cout << "是否修改年龄 0.否 1.是" << endl;
+		cin >> gaibian;
+		if (gaibian)
+		{
+			cout << "请输入年龄" << endl;
+			int age = 0;
+			while (true)
+			{
+				cin >> age;
+				if (age > 0 && age < 150)
+				{
+					abs->lianXiArr[ret].m_age = age;
+					break;
+				}
+				cout << "输入有误" << endl;
+			}
+		}
+		cout << "是否修改电话0.否 1.是" << endl;
+		cin >> gaibian;
+		if (gaibian)
+		{
+			cout << "请输入电话" << endl;
+			string iphone;
+			cin >> iphone;
+			abs->lianXiArr[ret].m_iphone = iphone;
+		}
+		cout << "是否修改地址0.否 1.是" << endl;
+		cin >> gaibian;
+		if (gaibian)
+		{
+			cout << "请输入地址" << endl;
+			string addres;
+			cin >> addres;
+			abs->lianXiArr[ret].m_location = addres;
+		}
+		cout << "修改成功" << endl;
+	}
+	else
+	{
+		cout << "未找到联系人" << endl;
+	}
+	system("pause");
+	system("cls");
+}
+void cleanPerson(AddressBooks* abs)
+{
+	int queren = 0;
+	cout << "是否确认清空 0否 1.确认" << endl;
+	cin >> queren;
+	if (queren)
+	{
+		abs->m_size = 0;
+		cout << "通讯录已经清空" << endl;
+	}
+	else
+	{
+		cout << "取消清空联系人" << endl;
+	}
+	system("pause");
+	system("cls");
+}
+int main()
+{
+	struct AddressBooks Tabs;
+	Tabs.m_size = 0;
+	while (true)
+	{
+		int select = 0;
+		showMenu();
+		cin >> select;
+		switch (select)
+		{
+		case 1:
+			cout << "添加联系人" << endl;
+			addPerson(&Tabs);//利用地址传
+			break;
+		case 2:
+			cout << "显示联系人" << endl;
+			showPerson(&Tabs);
+
+			break;
+		case 3:
+		deletePerson(&Tabs);
+			break;
+		case 4:
+			cout << "查找联系人" << endl;
+			findPerson(&Tabs);
+			break;
+		case 5:
+			cout << "修改联系人" << endl;
+			modifyPerson(&Tabs);
+			break;
+		case 6:
+			cout << "清空联系人" << endl;
+			cleanPerson(&Tabs);
+			break;
+		case 0:
+			cout << "退出联系人" << endl;
+			return 0;
+		default:
+			cout << "输入错误" << endl;
+			system("pause");
+			system("cls");
+		}
+	}
+	cout << "hello" << endl;
+	return 0;
+}
